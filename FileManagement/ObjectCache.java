@@ -78,7 +78,7 @@ public class ObjectCache<T>
 	{
 		Object result =ObjectCache.readObject(this.G_storedfile); 
 		
-		println("readObject() result"+ result);
+		//println("readObject() result"+ result);
 		
 		if(result!=null&&this.G_targetedobject==null)this.G_targetedobject = (T) result;
 		return result==null?null:(T)result;
@@ -123,7 +123,7 @@ public class ObjectCache<T>
 		if(!filelreadfrom.exists())return null;
 		try 
 		{
-			println("readObject() is executing....");
+			//println("readObject() is executing....");
 			ObjectInputStream objinput = new ObjectInputStream(new FileInputStream(filelreadfrom));
 			Object result = objinput.readObject();
 			objinput.close();

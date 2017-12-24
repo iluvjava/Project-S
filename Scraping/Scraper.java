@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import FileManagement.NotADirectoryException;
+import FileManagement.ObjectCache;
+
 
 
 /**<b>This class operates on a scrapable</b>
@@ -55,6 +58,9 @@ public class Scraper
 		this.target = target;
 		this.G_rootcrapable = scr;
 		this.G_waitingfordonwload = new ConcurrentLinkedQueue<Scrapable>();
+		
+		
+		
 	}
 	
 	
@@ -111,7 +117,6 @@ public class Scraper
 		}
 	}
 	
-	
 	public String toString()
 	{
 		String s = new String();
@@ -125,12 +130,57 @@ public class Scraper
 		return s; 
 	}
 	
-	
 	public static void println(Object o)
 	{
 		System.out.println(o);
 	}
 	
 	
-
+	
+	/**
+	 * <p>
+	 * This method will tries to use the directory in the field to look for the 
+	 * archived webs site file in the specific directory
+	 * <p>
+	 * If this method successfully located the method, it will tries to 
+	 * read the file and return it. 
+	 * @return
+	 * 
+	 * null if the file is not found.
+	 */
+	private Collection<String> isArchived()
+	{
+		String directory = this.G_directory;
+		File  directoryfile = new File(directory);
+		Collection<String> result = null;
+		
+		try
+		{
+			ObjectCache<Collection<String>> objc 
+			=
+			new ObjectCache<Collection<String>>(null,directoryfile,"archive");
+			
+			if(objc.isThere())result = objc.readObject();
+		} 
+		catch (NotADirectoryException e) 
+		{
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
+	/**
+	 * This is non static method that will try to set up the collection 
+	 * of all the visited web sites in the scrapable interface. 
+	 * 
+	 *
+	 */
+	private void setupArchive()
+	{
+		
+	}
+	
+	
 }
