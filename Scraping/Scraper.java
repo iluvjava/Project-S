@@ -96,8 +96,10 @@ public class Scraper
 	}
 	
 	
-	/**
-	 * Unit tested; 
+	/**Unite Tested 
+	 * <p>
+	 * This method will recurse through the structure, base case is if the returned 
+	 * collection of scrapable is null or the goal has reached.
 	 * @param node
 	 */
 	private void execute_Helper(Scrapable node)
@@ -113,7 +115,7 @@ public class Scraper
 		{
 			e.printStackTrace();
 		}
-		if(thestuff==null)return;// don't explode.
+		if(thestuff==null)return;// don't explode. also, base case....
 		for(Scrapable s :thestuff)
 		{
 			s.createSynapse();
