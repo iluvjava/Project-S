@@ -25,7 +25,7 @@ public class TestEveything {
 	{
 		//testScrapingProperties("https://rated-r-ponystar.deviantart.com/art/AtN-The-Hooves-Twins-Part-10-719127958");
 		//testScrapingProperties_part("https://blackkaries.deviantart.com/art/Twilight-Sparkle-271672604");
-		theemaintest("https://mirroredsea.deviantart.com/art/Learning-to-Relax-697444825");
+		theemaintest("https://gashiboka.deviantart.com/art/Recall-the-Time-of-No-Return-Eng-page-276-721451928");
 		
 	}
 	
@@ -74,16 +74,13 @@ public class TestEveything {
 		Scrapable page = new DeviantArt(thelink);
 		File f = new File("E:/TestingScrapable");
 		f.mkdirs();
-		Scraper scr = new Scraper(page,f,3);
+		Scraper scr = new Scraper(page,f,30);
 		
 		println(scr);
 		
 		println("Testing the scraping properties of this object. ");
-		
 		scr.execute();
-		
 		println(scr);
-		
 	}
 	
 
