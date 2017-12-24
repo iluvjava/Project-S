@@ -58,9 +58,7 @@ public class Scraper
 		this.target = target;
 		this.G_rootcrapable = scr;
 		this.G_waitingfordonwload = new ConcurrentLinkedQueue<Scrapable>();
-		
-		
-		
+		this.setupArchive();
 	}
 	
 	
@@ -76,16 +74,25 @@ public class Scraper
 	 * queue. 
 	 * 
 	 * <b>We will start with a horizontal recursive mode for the best range of scraping. </b>
+	 * 
+	 * <P>after the goal is reached, this method will also tries to save the collection
+	 * of bisited websites in the local disk.
 	 */
 	public void execute()
 	{
 		println("Executing...");
+		
+		this.G_waitingfordonwload.add(this.G_rootcrapable); // remeber to add the root.....
+		
 		this.execute_Helper(this.G_rootcrapable);
 		while(!this.G_waitingfordonwload.isEmpty())
 		{
 			Scrapable s = this.G_waitingfordonwload.remove();
 			Scrapable.createFileFromScrapable(this.G_directory_file, s);
 		}
+		
+		this.StoreTheArchive();
+		
 	}
 	
 	
@@ -137,7 +144,7 @@ public class Scraper
 	
 	
 	
-	/**
+	/**Unite Tested
 	 * <p>
 	 * This method will tries to use the directory in the field to look for the 
 	 * archived webs site file in the specific directory
@@ -148,7 +155,7 @@ public class Scraper
 	 * 
 	 * null if the file is not found.
 	 */
-	private Collection<String> isArchived()
+	private Collection<String> getArchive()
 	{
 		String directory = this.G_directory;
 		File  directoryfile = new File(directory);
@@ -158,7 +165,8 @@ public class Scraper
 		{
 			ObjectCache<Collection<String>> objc 
 			=
-			new ObjectCache<Collection<String>>(null,directoryfile,"archive");
+			new ObjectCache<Collection<String>>(null,directoryfile,"archive"); // This is the name of the file that 
+			// is string on the hard disk. 
 			
 			if(objc.isThere())result = objc.readObject();
 		} 
@@ -172,15 +180,60 @@ public class Scraper
 	
 	
 	/**
+	 * United Tested
+	 * <p>
 	 * This is non static method that will try to set up the collection 
 	 * of all the visited web sites in the scrapable interface. 
-	 * 
+	 * <p>
+	 * If this method works successfully, it should set up the vairable in the 
+	 * scapable interface if not, it won't modifies anything.
 	 *
 	 */
 	private void setupArchive()
 	{
 		
+		println("Trying to see if we can set up the archive....");
+		Collection<String> temp= this.getArchive();
+		if(temp!=null)
+		{
+			println("There is an archive and we read it: ");
+			Scrapable.G_alreadyVistedURL.addAll(temp);
+			println(temp);
+		}
+		else
+		{
+			println("We didn't find any archive......");
+		}
+		
 	}
+	
+	
+	/**
+	 * Unit Tested
+	 * <p>
+	 * This s a non static method that will store the collection of visted websites in the scapable 
+	 * interface onto the hard disk. 
+	 */
+	private void StoreTheArchive()
+	{
+		Collection<String> stuff = Scrapable.G_alreadyVistedURL;
+		try {
+			ObjectCache<Collection<String>> objc 
+			=
+			new ObjectCache<Collection<String>>(stuff,this.G_directory_file,"archive");
+			
+			boolean result = objc.writeObject();
+			
+			println("Ths scraper is storing the the visited web sites onto the hard disk; ");
+			if(result)println("Here is the result: sucessful");else println("Unsucessful...");
+		} catch (NotADirectoryException e) {
+			// do nothing. 
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	
 }

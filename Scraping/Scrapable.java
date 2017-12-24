@@ -86,11 +86,14 @@ public interface Scrapable
 	
 	/**
 	 * This is a method that take in a scrapable object and try to 
-	 * get a name for the file using the url return by the object. 
-	 * 
-	 * it will check the instance of the input parameter and 
-	 * decide what post fix of the file should receive. 
-	 * @param arg
+	 * get a name for the file using the url return by the object, 
+	 * <b>
+	 * You should implement it in such a way that the reuturn web site url 
+	 * is the same compare to the content downloaded. 
+	 * </b>
+	 * <p>
+	 * This method will tries to read a post fix of the file from the url you have returned. 
+	 * @param
 	 * @return
 	 */
 	public static String getFilenameFromScrapable(Scrapable scr)

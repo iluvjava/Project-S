@@ -145,7 +145,7 @@ public class ObjectCache<T>
 	
 	
 	/**
-	 * Simple wrtite the object to the specified file, as the file.
+	 * Simple write the object to the specified file, as the file.
 	 * @param thefile
 	 * @param arg
 	 * @return
@@ -167,8 +167,7 @@ public class ObjectCache<T>
 		{
 			e.printStackTrace();
 		}
-		finally
-		{return false;}
+		return false;
 	}
 
 	/**
