@@ -23,7 +23,7 @@ import FileManagement.ObjectCache;
  * 
  *</ul>
  * 
- * @author victo
+ * @author Rainbow Dash Is the BEST PONY! 
  *
  */
 public class Scraper
