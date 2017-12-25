@@ -13,7 +13,9 @@ import WebPage.DeviantArt;
 public class TestEveything {
 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception 
+	{
+		
 	}
 
 	@Before
