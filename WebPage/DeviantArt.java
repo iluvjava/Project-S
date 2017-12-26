@@ -26,6 +26,9 @@ import Scraping.Scrapable;
 
 /**
  * Restructure my old code.
+ * 
+ * <p>
+ * Refine the behaviour defined by the interface, include exception. 
  * @author autistic lycan
  */
 public final class DeviantArt extends HtmlPage implements Scrapable{

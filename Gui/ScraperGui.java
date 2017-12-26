@@ -19,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JToolBar;
 import javax.swing.JMenu;
+import javax.swing.JProgressBar;
 
 public class ScraperGui {
 
@@ -137,5 +138,8 @@ public class ScraperGui {
 	 */
 	public JButton getBtnStart() {
 		return btnStart;
+	}
+	public JFrame getFrame() {
+		return frame;
 	}
 }
