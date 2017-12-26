@@ -10,7 +10,8 @@ public class MainSettingup
 	public static void main(String[] args)
 	{
 		ScraperGui view = new ScraperGui();
-		Controller con = new Controller();
+		GuiModel model = new GuiModel(view);
+		Controller con = new Controller(model);
 		view.getBtnStart().addActionListener(con);
 		view.getFrame().setVisible(true);
 	}

@@ -42,10 +42,44 @@ class Controller implements EventListener, ActionListener
 		this.G_model = arg;
 	}
 	@Override
+	
+	
+	/**
+	 * When the start botton is pressed, this method will execute everything
+	 * <ul>
+	 * <li>1. Exame the input url, and number in the spinner
+	 * <li>2. Call factory method and response to the screen accordingly.
+	 * <li>3. Direct output to another package if possible
+	 * </ul>
+	 * 
+	 */
 	public void actionPerformed(ActionEvent e) 
 	{
-		System.out.println("This is the action command:");
-		System.out.println(e.getActionCommand());
+		println("This is the action command:");
+		println(e.getActionCommand());
+		
+		println("Trying to get file chooser info");
+		String s = this.G_model.G_GUI.getFileChooser().getSelectedFile().toString();
+		println(s);
+		
+		
+		
+	}
+	
+	
+	public void println(Object o)
+	{
+		this.G_model.G_GUI.getTxtpnDisplay().setText(o.toString());
+	}
+	
+	
+	/*
+	 * This is a class that will format and store buffere text that is going to he text
+	 * panel. 
+	 */
+	static class TextAreaBuffer
+	{
+		
 		
 	}
 	
