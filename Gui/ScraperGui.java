@@ -41,18 +41,23 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.Window.Type;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Font;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.TextArea;
 
 public class ScraperGui implements View{
 
 	private JFrame frame;
 	private JTextField textField;
 	private JSpinner spinner;
-	private JTextPane txtpnDisplay;
 	private JButton btnStart;
 	private JMenuItem mntmOpenFilechooser;
 	private Object G_mainListener;
 	private JPanel panel;
 	private FileChooserDialog G_Filechooserdialogwin;
+	private JScrollPane scrollPane;
+	private TextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -92,7 +97,7 @@ public class ScraperGui implements View{
 	private void initialize() {
 		frame = new JFrame();
 		frame.setAutoRequestFocus(false);
-		frame.setBounds(100, 100, 915, 661);
+		frame.setBounds(100, 100, 966, 661);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -109,14 +114,16 @@ public class ScraperGui implements View{
 		
 		spinner = new JSpinner();
 		panel.add(spinner);
-		spinner.setModel(new SpinnerNumberModel(0, 0, 500, 1));
+		spinner.setModel(new SpinnerNumberModel(15, 1, 500, 1));
 		
-		txtpnDisplay = new JTextPane();
-		frame.getContentPane().add(txtpnDisplay, BorderLayout.CENTER);
-		txtpnDisplay.setEditable(false);
-		txtpnDisplay.setForeground(Color.GREEN);
-		txtpnDisplay.setBackground(Color.DARK_GRAY);
-		txtpnDisplay.setText("Display");
+		scrollPane = new JScrollPane();
+		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		
+		textArea = new TextArea();
+		textArea.setText("Display");
+		textArea.setEditable(false);
+		scrollPane.setViewportView(textArea);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -127,11 +134,13 @@ public class ScraperGui implements View{
 		mntmOpenFilechooser = new JMenuItem("Open FileChooser");
 		
 		
-		// Can through null exception.
+		// Can throw null exception.
 		mntmOpenFilechooser.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				if(G_Filechooserdialogwin==null)
+				{
 				FileChooserDialog temp = new FileChooserDialog();
 				
 				System.out.println("Adding listener to dialog:"+G_mainListener);
@@ -139,6 +148,11 @@ public class ScraperGui implements View{
 				
 				G_Filechooserdialogwin = temp;
 				temp.setVisible(true);
+				}
+				else
+				{
+					G_Filechooserdialogwin.setVisible(true);
+				}
 			}
 		});
 		
@@ -173,14 +187,7 @@ public class ScraperGui implements View{
 		return textField;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 * The output text field of the window
-	 */
-	public JTextPane getTxtpnDisplay() {
-		return txtpnDisplay;
-	}
+
 	
 	/**
 	 * 
@@ -204,18 +211,12 @@ public class ScraperGui implements View{
 		if(l instanceof ActionListener)
 		{
 			this.btnStart.addActionListener((ActionListener) l);
-			this.textField.addActionListener((ActionListener) l);
 		}
 		
 		this.G_mainListener = l;
 		return this;
 	}
 
-	@Override
-	public JTextPane getTextPanel() {
-
-		return this.getTxtpnDisplay();
-	}
 	
 	
 	/**
@@ -225,7 +226,17 @@ public class ScraperGui implements View{
 	 */
 	public JFileChooser getFileChooser()
 	{
-		if(this.G_Filechooserdialogwin==null)return null;
+		if(this.G_Filechooserdialogwin == null)return null;
 		return this.G_Filechooserdialogwin.getFileChooser();
 	}
+	
+	public FileChooserDialog getFileChooserDialog()
+	{
+		return G_Filechooserdialogwin;
+	}
+	public TextArea getTextArea() {
+		return textArea;
+	}
+
+	
 }

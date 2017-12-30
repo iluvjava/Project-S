@@ -27,14 +27,45 @@ class Controller implements  ActionListener
 	 * <ul>
 	 * <li>1. Direct output to another package if possible
 	 * <li>2. tries to let the model to deal with it. 
+	 * <li>3. It will get the http link if detected. 
 	 * </ul>
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) 
 	{
+		
 		System.out.println(e.getActionCommand());
+		//GuiModel.println(e.getActionCommand());
+		String s = e.getActionCommand();
+		switch(s)
+		{
+			case "Start":
+				Start();
+				break;
+			case "ApproveSelection":
+				ApproveSelection();
+				break;
+			case "CancelSelection":
+				CancelSelection();
+				break;
+		}
+	}
+	
+
+	private void CancelSelection() 
+	{
+		this.G_model.removeDirectory();
+		this.G_model.closeFileChooser();
 		
-		
+	}
+	private void ApproveSelection() 
+	{
+		this.G_model.setDirectory();
+		this.G_model.closeFileChooser();
+	}
+	private void Start() 
+	{
+		this.G_model.startExecute();
 	}
 	
 	

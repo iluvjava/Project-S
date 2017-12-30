@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import FileManagement.NotADirectoryException;
 import FileManagement.ObjectCache;
+import Gui.GuiModel;
 
 
 
@@ -141,6 +142,7 @@ public class Scraper
 	
 	public static void println(Object o)
 	{
+		GuiModel.println(o);
 		System.out.println(o);
 	}
 	

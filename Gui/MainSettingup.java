@@ -14,10 +14,13 @@ public class MainSettingup
 	{
 		
 		View v = new ScraperGui();
+		
 		v.getFrame().setVisible(true);
+		
 		GuiModel m = new GuiModel(v);
 		
 		Controller con = new Controller(m);
+		
 		v.addListener(con);
 	}
 

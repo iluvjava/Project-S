@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashSet;
 
+import Gui.GuiModel;
 import WebPage.DeviantArt;
 import WebPage.WebPage;
 
@@ -162,6 +163,8 @@ public interface Scrapable
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			println("DotheScraping has failed; here are scrapable details:");
+			println(scr);
 			return false;
 		}
 		return true;
@@ -170,6 +173,7 @@ public interface Scrapable
 	
 	public static void println(Object o )
 	{
+		GuiModel.println(o);
 		System.out.println(o);
 	}
 	

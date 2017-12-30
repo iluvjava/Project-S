@@ -17,6 +17,8 @@ import java.io.ObjectOutputStream;
  * <ul>
  * <li>1. Store the object given the object and info about directory;
  * <li>2. Retrive the object when wanted. 
+ * <li>3. The parameter five as a file object should not ended with a "/", normally
+ * it should be just a file that pointed to a directory.
  * <li>Be able to throw customized exceptions at will. 
  * <li>Be able to move objects around for fun. 
  * <li>Provide many static methods so that if the info about the files are not used many times, 

@@ -22,6 +22,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import Gui.GuiModel;
 import Scraping.Scrapable;
 
 /**
@@ -66,6 +67,7 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 		if(!DeviantArt.isInDadomain(link))throw new IllegalArgumentException();
 		if(referedlink!=null)this.setReferedLink(referedlink);
 		this.ignorecontentType(false);
+		this.setRedirect(true); //recentely added. 
 		this.loadPage();
 		this.G_theimage = this.getDAMainImag();
 		this.doTheScraping();
@@ -202,7 +204,7 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 		String downloadlink = getDownloadlink(this.getDoc());
 		if(downloadlink == null)
 		{
-			System.out.println("High quality image link is not there. ");
+			println("High quality image link is not there. ");
 			return null;
 		}
 		
@@ -214,7 +216,7 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 		wp.setRedirect(true);
 		wp.loadPage();
 		
-		System.out.println("Getting the high quality image... status code: "+ wp.getResponse().statusCode());
+		println("Getting the high quality image... status code: "+ wp.getResponse().statusCode());
 		
 		//if(wp.getResponse().statusCode()!=200)return null;
 		
@@ -242,8 +244,8 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 			for(Element e : eles)
 			{
 		
-				System.out.println("DA link: "+e.baseUri());
-				System.out.println("main Img: "+e.attr("abs:src"));
+				println("DA link: "+e.baseUri());
+				println("main Img: "+e.attr("abs:src"));
 				return new URL(e.attr("abs:src")).toString();
 			}
 		 }
@@ -277,7 +279,7 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 	 * Unit Tested
 	 * This is a method that will return a buffered out put stream that 
 	 * can be prepared for downloading the content; 
-	 * 
+	 * @Throw MalformedURLexception.
 	 */
 	public InputStream doTheScraping() throws IOException 
 	{
@@ -371,7 +373,7 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 
 	
 	
-	/**
+	/**100% working
 	 * A public method is deviat art that tells whether the web link contains 
 	 * the domain name of deviant art. 
 	 * @param link
@@ -379,7 +381,7 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 	 */
 	public static boolean isInDadomain(String link)
 	{
-		boolean result =true;
+		boolean result =false;
 		result|= link.matches("https://.*deviantart.*");
 		result |= link.matches("http://fav.me/.+");
 		return result;
@@ -398,9 +400,9 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 		//Elements eles = doc.select(".dev-page-button dev-page-button-with-text dev-page-download ");
 		if(eles.size()>0)
 		{
-			System.out.println("There is a download botton on this deviant art page. ");
+			println("There is a download botton on this deviant art page. ");
 			 downloadlink = eles.get(0).attr("href");
-			 System.out.println("Download link: "+ downloadlink);
+			 println("Download link: "+ downloadlink);
 		}
 		return downloadlink;
 	}
@@ -413,6 +415,8 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 
 	public static void println(Object o )
 	{
+		
+		GuiModel.println(o);
 		System.out.println(o);
 	}
 
@@ -423,6 +427,7 @@ public final class DeviantArt extends HtmlPage implements Scrapable{
 	public String getSourceContentUrl() {
 		
 		return this.G_theimage;
+		
 	}
 	
 	

@@ -28,6 +28,6 @@ interface View
 	 * @return
 	 * null, this object is absence from this frame. 
 	 */
-	JTextPane getTextPanel();
+	
 
 }
