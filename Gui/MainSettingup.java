@@ -1,5 +1,8 @@
 package Gui;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 /**
  * This class will connect the lisrener to the gui
  * @author victo
@@ -7,13 +10,15 @@ package Gui;
  */
 public class MainSettingup 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
-		ScraperGui view = new ScraperGui();
-		GuiModel model = new GuiModel(view);
-		Controller con = new Controller(model);
-		view.getBtnStart().addActionListener(con);
-		view.getFrame().setVisible(true);
+		
+		View v = new ScraperGui();
+		v.getFrame().setVisible(true);
+		GuiModel m = new GuiModel(v);
+		
+		Controller con = new Controller(m);
+		v.addListener(con);
 	}
 
 }
