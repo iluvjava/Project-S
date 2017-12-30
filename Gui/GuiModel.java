@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 
+import javax.swing.JTextPane;
+
 /**
  * This class will be the model behind the gui 
  * and control the program. 
@@ -19,11 +21,11 @@ import java.util.EventListener;
  */
 public class GuiModel 
 {
-	View G_GUI;
+	ScraperGui G_GUI;
 	
 	public GuiModel(View arg)
 	{
-		this.G_GUI = arg;
+		if(arg instanceof View)this.G_GUI = (ScraperGui) arg;
 	}
 	
 	
@@ -34,7 +36,12 @@ public class GuiModel
 	 */
 	class DisplayText
 	{
+		private JTextPane G_JTpane;
 		
+		public DisplayText(JTextPane panel)
+		{
+			this.G_JTpane=panel;
+		}
 		
 	}
 	

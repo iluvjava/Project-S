@@ -40,17 +40,19 @@ import javax.swing.ImageIcon;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.awt.Window.Type;
+import net.miginfocom.swing.MigLayout;
 
 public class ScraperGui implements View{
 
 	private JFrame frame;
 	private JTextField textField;
 	private JSpinner spinner;
-	private JPanel panel;
 	private JTextPane txtpnDisplay;
 	private JButton btnStart;
 	private JMenuItem mntmOpenFilechooser;
-	private Object G_mainListner;
+	private Object G_mainListener;
+	private JPanel panel;
+	private FileChooserDialog G_Filechooserdialogwin;
 
 	/**
 	 * Launch the application.
@@ -90,40 +92,31 @@ public class ScraperGui implements View{
 	private void initialize() {
 		frame = new JFrame();
 		frame.setAutoRequestFocus(false);
-		frame.setBounds(100, 100, 800, 600);
+		frame.setBounds(100, 100, 915, 661);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		panel = new JPanel();
-		panel.setBounds(0, 0, 774, 529);
-		frame.getContentPane().add(panel);
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		btnStart = new JButton("Start");
-		btnStart.setBounds(660, 77, 93, 37);
-		btnStart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		panel.setLayout(null);
+		frame.getContentPane().add(btnStart, BorderLayout.SOUTH);
+		
+		
+		panel = new JPanel();
+		frame.getContentPane().add(panel, BorderLayout.NORTH);
+		
+		textField = new JTextField();
+		panel.add(textField);
+		textField.setColumns(50);
+		
+		spinner = new JSpinner();
+		panel.add(spinner);
+		spinner.setModel(new SpinnerNumberModel(0, 0, 500, 1));
 		
 		txtpnDisplay = new JTextPane();
-		txtpnDisplay.setBounds(21, 77, 606, 371);
-		panel.add(txtpnDisplay);
+		frame.getContentPane().add(txtpnDisplay, BorderLayout.CENTER);
 		txtpnDisplay.setEditable(false);
 		txtpnDisplay.setForeground(Color.GREEN);
 		txtpnDisplay.setBackground(Color.DARK_GRAY);
 		txtpnDisplay.setText("Display");
-		panel.add(btnStart);
-		
-		spinner = new JSpinner();
-		spinner.setBounds(660, 21, 59, 36);
-		spinner.setModel(new SpinnerNumberModel(0, 0, 500, 1));
-		panel.add(spinner);
-		
-		textField = new JTextField();
-		textField.setBounds(21, 21, 606, 35);
-		panel.add(textField);
-		textField.setColumns(50);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -132,13 +125,24 @@ public class ScraperGui implements View{
 		menuBar.add(mnFile);
 		
 		mntmOpenFilechooser = new JMenuItem("Open FileChooser");
-		mntmOpenFilechooser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FileChooser temp = new FileChooser();
-				temp.getFrame().setVisible(true);
-				temp.getFileChooser().addActionListener((ActionListener) G_mainListner);
+		
+		
+		// Can through null exception.
+		mntmOpenFilechooser.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				FileChooserDialog temp = new FileChooserDialog();
+				
+				System.out.println("Adding listener to dialog:"+G_mainListener);
+				temp.getFileChooser().addActionListener((ActionListener) G_mainListener);
+				
+				G_Filechooserdialogwin = temp;
+				temp.setVisible(true);
 			}
 		});
+		
+		
 		mntmOpenFilechooser.setIcon(new ImageIcon(ScraperGui.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		mntmOpenFilechooser.setSelectedIcon(new ImageIcon(ScraperGui.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		mnFile.add(mntmOpenFilechooser);
@@ -186,11 +190,12 @@ public class ScraperGui implements View{
 	public JButton getBtnStart() {
 		return btnStart;
 	}
-	public JFrame getFrame() {
-		return frame;
-	}
 	public JMenuItem getMntmOpenFilechooser() {
 		return mntmOpenFilechooser;
+	}
+
+	public JFrame getFrame() {
+		return frame;
 	}
 
 	@Override
@@ -202,7 +207,7 @@ public class ScraperGui implements View{
 			this.textField.addActionListener((ActionListener) l);
 		}
 		
-		this.G_mainListner = l;
+		this.G_mainListener = l;
 		return this;
 	}
 
@@ -210,5 +215,17 @@ public class ScraperGui implements View{
 	public JTextPane getTextPanel() {
 
 		return this.getTxtpnDisplay();
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 * The file chooser object to the model, null if it haven't been opened yet.
+	 */
+	public JFileChooser getFileChooser()
+	{
+		if(this.G_Filechooserdialogwin==null)return null;
+		return this.G_Filechooserdialogwin.getFileChooser();
 	}
 }

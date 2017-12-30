@@ -35,20 +35,10 @@ class Controller implements  ActionListener
 		System.out.println(e.getActionCommand());
 		
 		
-		
 	}
 	
 	
-	public void println(Object o)
-	{
 	
-	}
-	
-	
-	/*
-	 * This is a class that will format and store buffere text that is going to he text
-	 * panel. 
-	 */
 	
 	
 }
