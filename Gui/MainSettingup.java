@@ -23,5 +23,4 @@ public class MainSettingup
 		
 		v.addListener(con);
 	}
-
 }

@@ -103,16 +103,19 @@ public class ScraperGui implements View{
 		
 		btnStart = new JButton("Start");
 		frame.getContentPane().add(btnStart, BorderLayout.SOUTH);
-		
+		btnStart.setToolTipText(ToolTips.StartBottonTips.ToolTips);
 		
 		panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 		
 		textField = new JTextField();
+		textField.setToolTipText(ToolTips.TextFiledTips.ToolTips);  // Tool Tip!
 		panel.add(textField);
 		textField.setColumns(50);
 		
 		spinner = new JSpinner();
+		spinner.setToolTipText(ToolTips.SwingSpinnerTips.ToolTips);
+		
 		panel.add(spinner);
 		spinner.setModel(new SpinnerNumberModel(15, 1, 500, 1));
 		
@@ -120,7 +123,6 @@ public class ScraperGui implements View{
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		textArea = new TextArea();
-		textArea.setText("Display");
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
 		
